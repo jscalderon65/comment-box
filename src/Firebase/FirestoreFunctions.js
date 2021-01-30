@@ -1,22 +1,22 @@
 import { message as Message } from "antd";
 import "antd/dist/antd.css";
-const { success, error: Error, info } = Message;
+const { success, error: Error } = Message;
+const Month = [
+  "Enero",
+  "Febrero",
+  "Marzo",
+  "Abril",
+  "Mayo",
+  "Junio",
+  "Julio",
+  "Agosto",
+  "Septiembre",
+  "Octubre",
+  "Noviembre",
+  "Diciembre",
+];
 const AddComment = (firebase, CommentContent, userInfo) => {
   const CreationDate = new Date();
-  const Month = [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre",
-  ];
   const Creation = `A las ${CreationDate.getHours()}:${CreationDate.getMinutes()}, el dia ${CreationDate.getDate()} de ${
     Month[CreationDate.getMonth()]
   } del ${CreationDate.getFullYear()}`;
@@ -72,20 +72,6 @@ const AddReply = (
 ) => {
   const { uid, email, displayName, photoURL } = userOnlineInfo;
   const CreationDate = new Date();
-  const Month = [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre",
-  ];
   const Creation = `A las ${CreationDate.getHours()}:${CreationDate.getMinutes()}, el dia ${CreationDate.getDate()} de ${
     Month[CreationDate.getMonth()]
   } del ${CreationDate.getFullYear()}`;
@@ -94,10 +80,16 @@ const AddReply = (
     Replies: [
       ...ReplyArray,
       {
+        id: JSON.stringify(new Date()),
         Creation,
         Reply,
         ReplyTo,
-        UserInfo: { uid, email, displayName, photoURL },
+        UserInfo: {
+          uid,
+          email,
+          displayName,
+          photoURL,
+        },
       },
     ],
   })
@@ -108,4 +100,41 @@ const AddReply = (
       Error("Error Adding Reply", 3);
     });
 };
-export { AddComment, DeleteComment, UpdateComment, AddReply };
+const DeleteReply = (firebase, DocId, ReplyArray, ReplyId) => {
+  let DocumentRef = firebase.firestore().collection("CommentsApp").doc(DocId);
+  DocumentRef.update({
+    Replies: ReplyArray.filter((reply) => reply.id !== ReplyId),
+  })
+    .then(() => {
+      success("Reply successfully Added!", 5);
+    })
+    .catch((error) => {
+      Error("Error Adding Reply", 3);
+    });
+};
+const UpdateReply = (firebase, DocId, ReplyArray, ReplyId, ReplyUpdate) => {
+  let DocumentRef = firebase.firestore().collection("CommentsApp").doc(DocId);
+  DocumentRef.update({
+    Replies: ReplyArray.map((item) => {
+      if (item.id === ReplyId) {
+        item.Reply = ReplyUpdate;
+      }
+      return item;
+    }),
+  })
+    .then(() => {
+      success("Reply successfully Added!", 5);
+    })
+    .catch((error) => {
+      Error("Error Adding Reply", 3);
+    });
+};
+
+export {
+  AddComment,
+  DeleteComment,
+  UpdateComment,
+  AddReply,
+  DeleteReply,
+  UpdateReply,
+};

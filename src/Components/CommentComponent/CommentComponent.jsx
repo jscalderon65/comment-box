@@ -1,4 +1,4 @@
-import { useState,useRef  } from "react";
+import { useState, useRef } from "react";
 import { useForm } from "my-customhook-collection";
 import {
   Input,
@@ -9,7 +9,7 @@ import {
   Popconfirm,
   Image,
   Button,
-  message
+  message,
 } from "antd";
 import {
   DeleteComment,
@@ -33,7 +33,11 @@ const CommentComponent = ({
   const ReplyScrollHandler = useRef();
   const EditScrollHandler = useRef();
   const { uid, displayName, photoURL } = userInfo;
-  const [{ ReplyInputValue }, HandleInputReplyChange] = useForm({
+  const [
+    { ReplyInputValue },
+    HandleInputReplyChange,
+    setReplyInputValue,
+  ] = useForm({
     ReplyInputValue: "",
   });
 
@@ -48,11 +52,21 @@ const CommentComponent = ({
   });
 
   const ReplyHandler = () => {
-   if(ReplyInputValue.trim()==="") {
+    if (ReplyInputValue.trim() === "") {
       info("¡Ingresa un comentario!");
-    }else{
-      AddReply(FirebaseApp, id, Replies, ReplyInputValue,UserOnlineInfo, displayName);
+    } else {
+      AddReply(
+        FirebaseApp,
+        id,
+        Replies,
+        ReplyInputValue,
+        UserOnlineInfo,
+        displayName
+      );
       SwitchReplyHandler();
+      setReplyInputValue({
+        ReplyInputValue: "",
+      });
     }
   };
 
@@ -106,40 +120,39 @@ const CommentComponent = ({
       author={<Title level={5}>{displayName}</Title>}
       avatar={<Image src={photoURL} alt="Han Solo" />}
       content={
-        <>        
-        <div ref={EditScrollHandler}/>
-        <p>
-          {SwitchEdit ? (
-            <>
-              <Input
-                name="EditInputValue"
-                size="large"
-                value={EditInputValue}
-                onChange={HandleInputChange}
-              />
-              <Button onClick={SwitchEditHandler} danger>
-                Cancelar
-              </Button>
-              {EditInputValue !== CommentContent
-                ? EditInputValue && (
-                    <Button onClick={UpdateHandler}>Guardar cambios</Button>
-                  )
-                : ""}
-            </>
-          ) : (
-            CommentContent
-          )}
-        </p>
+        <>
+          <div ref={EditScrollHandler} />
+          <p>
+            {SwitchEdit ? (
+              <>
+                <Input
+                  name="EditInputValue"
+                  size="large"
+                  value={EditInputValue}
+                  onChange={HandleInputChange}
+                />
+                <Button onClick={SwitchEditHandler} danger>
+                  Cancelar
+                </Button>
+                {EditInputValue !== CommentContent
+                  ? EditInputValue && (
+                      <Button onClick={UpdateHandler}>Guardar cambios</Button>
+                    )
+                  : ""}
+              </>
+            ) : (
+              CommentContent
+            )}
+          </p>
         </>
       }
-      
       datetime={
         <Tooltip title={Creation}>
           <span>{Creation}</span>
         </Tooltip>
       }
-      >
-      <div ref={ReplyScrollHandler}/>
+    >
+      <div ref={ReplyScrollHandler} />
       {SwitchReply && (
         <>
           <Input.TextArea
@@ -150,17 +163,19 @@ const CommentComponent = ({
           <Button onClick={SwitchReplyHandler} danger>
             Cancelar
           </Button>
-          <Button onClick={ReplyHandler}>Responder</Button>
+          {ReplyInputValue && <Button onClick={ReplyHandler}>Responder</Button>}
         </>
       )}
       {/* {JSON.stringify(Replies,null,4)} */}
-      {Replies.length>0? (
+      {Replies.length > 0 ? (
         <Collapse defaultActiveKey={["Replies"]}>
           <Panel header={`Respuestas ${Replies.length}`} key="Replies">
             {children}
           </Panel>
         </Collapse>
-      ):""}
+      ) : (
+        ""
+      )}
     </Comment>
   );
 };
