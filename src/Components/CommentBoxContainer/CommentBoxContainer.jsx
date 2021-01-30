@@ -5,15 +5,16 @@ import {
 } from "my-customhook-collection";
 import { firebase } from "../../Firebase/FirebaseConfig";
 import { googleAuth, logout } from "../../Firebase/FirebaseAuth";
-import { CommentComponent, AddCommentComponent } from "../index";
+import { CommentComponent, AddCommentComponent, ReplyComponent } from "../index";
 import { BackTop, Image, Button } from "antd";
 import "antd/dist/antd.css";
 const CommentBoxContainer = () => {
+
   const db = firebase.firestore();
   const refColl = db.collection("CommentsApp");
   const [comments] = useOnSnapshotCollection(refColl);
   const [UserInfo] = useFirebaseUser(firebase);
-  comments && console.log(comments);
+
   return (
     <div
       style={{
@@ -37,8 +38,10 @@ const CommentBoxContainer = () => {
         <AddCommentComponent FirebaseApp={firebase} UserInfo={UserInfo} />
       )}
       {comments &&
-        comments.map((comment) => (
-          <CommentComponent FirebaseApp={firebase} key={comment.id} {...comment} UserOnlineInfo={UserInfo}/>
+        comments.reverse().map((comment) => (
+          <CommentComponent FirebaseApp={firebase} key={comment.id} {...comment} UserOnlineInfo={UserInfo}>
+            {comment.Replies.map(Reply=><ReplyComponent {...Reply}/>)}
+            </CommentComponent>
         ))}
       <BackTop />
     </div>
