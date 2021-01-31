@@ -9,7 +9,11 @@ import {
   Input,
   Button,
 } from "antd";
-import { DeleteReply, UpdateReply } from "../../Firebase/FirestoreFunctions";
+import {
+  DeleteReply,
+  UpdateReply,
+  AddReply,
+} from "../../Firebase/FirestoreFunctions";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
 const { Title } = Typography;
 const ReplyComponent = ({
@@ -45,7 +49,32 @@ const ReplyComponent = ({
 
     EditScrollHandler.current.scrollIntoView({ behavior: "smooth" });
   };
-
+  const [
+    { ReplyInputValue },
+    HandleInputReplyChange,
+    setReplyInputValue,
+  ] = useForm({
+    ReplyInputValue: "",
+  });
+  const [SwitchReply, setSwitchReply] = useState(false);
+  const SwitchReplyHandler = () => {
+    setSwitchReply(!SwitchReply);
+    ReplyScrollHandler.current.scrollIntoView({ behavior: "smooth" });
+  };
+  const ReplyHandler = () => {
+    AddReply(
+      FirebaseApp,
+      DocId,
+      Replies,
+      ReplyInputValue,
+      UserOnlineInfo,
+      displayName
+    );
+    SwitchReplyHandler();
+    setReplyInputValue({
+      ReplyInputValue: "",
+    });
+  };
   const actions = [
     UserOnlineInfo && uid === UserOnlineInfo.uid && (
       <Tooltip title={"Editar comentario"}>
@@ -65,7 +94,11 @@ const ReplyComponent = ({
         </Tooltip>
       </Popconfirm>
     ),
-    UserOnlineInfo && <span key="comment-basic-reply-to">Responder</span>,
+    UserOnlineInfo && (
+      <span key="comment-basic-reply-to" onClick={SwitchReplyHandler}>
+        Responder
+      </span>
+    ),
   ];
 
   return (
@@ -113,6 +146,20 @@ const ReplyComponent = ({
         </Tooltip>
       }
     >
+      <div ref={ReplyScrollHandler} />
+      {SwitchReply && (
+        <>
+          <Input.TextArea
+            onChange={HandleInputReplyChange}
+            name={"ReplyInputValue"}
+            value={ReplyInputValue}
+          />
+          <Button onClick={SwitchReplyHandler} danger>
+            Cancelar
+          </Button>
+          {ReplyInputValue && <Button onClick={ReplyHandler}>Responder</Button>}
+        </>
+      )}
       <div ref={ReplyScrollHandler} />
     </Comment>
   );

@@ -1,42 +1,30 @@
 import React from "react";
+import Store from '../../Redux/Store';
+import {GetCollection } from '../../Redux/ActionCreator'
+import { connect } from "react-redux";
 import {
   useFirebaseUser,
   useOnSnapshotCollection,
 } from "my-customhook-collection";
-import { firebase } from "../../Firebase/FirebaseConfig";
 import { googleAuth, logout } from "../../Firebase/FirebaseAuth";
 import {
   CommentComponent,
   AddCommentComponent,
   ReplyComponent,
 } from "../index";
-import { BackTop, Image, Button } from "antd";
-import "antd/dist/antd.css";
-const CommentBoxContainer = () => {
+import { BackTop } from "antd";
+const CommentBoxContainer = ({ CollectionName,GetCollection,firebase  }) => {
+  GetCollection(CollectionName);
   const db = firebase.firestore();
-  const refColl = db.collection("CommentsApp");
+  const refColl = db.collection(Store.getState().CollectionName);
   const [comments] = useOnSnapshotCollection(refColl);
   const [UserInfo] = useFirebaseUser(firebase);
-
   return (
     <div
       style={{
         padding: "20px",
       }}
     >
-      {UserInfo ? (
-        <>
-          <Image
-            style={{ borderRadius: "100%" }}
-            width={200}
-            src={UserInfo.photoURL}
-          />
-          <Button onClick={logout}>Salir</Button>
-        </>
-      ) : (
-        <Button onClick={googleAuth}>Ingresar</Button>
-      )}
-
       {UserInfo && (
         <AddCommentComponent FirebaseApp={firebase} UserInfo={UserInfo} />
       )}
@@ -64,5 +52,15 @@ const CommentBoxContainer = () => {
     </div>
   );
 };
-
-export default CommentBoxContainer;
+const mapStateToProps = (state) => ({
+  Collection: state.CollectionName,
+});
+const mapDispatchToProps = (dispatch) => ({
+  GetCollection(name){
+    dispatch(GetCollection(name))
+  }
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CommentBoxContainer);

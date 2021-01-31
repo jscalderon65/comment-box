@@ -118,7 +118,7 @@ const CommentComponent = ({
       }}
       actions={actions}
       author={<Title level={5}>{displayName}</Title>}
-      avatar={<Image src={photoURL} alt="Han Solo" />}
+      avatar={<Image src={photoURL} alt={displayName} />}
       content={
         <>
           <div ref={EditScrollHandler} />

@@ -1,4 +1,5 @@
 import { message as Message } from "antd";
+import Store from '../Redux/Store';
 import "antd/dist/antd.css";
 const { success, error: Error } = Message;
 const Month = [
@@ -22,7 +23,7 @@ const AddComment = (firebase, CommentContent, userInfo) => {
   } del ${CreationDate.getFullYear()}`;
   let DocumentRef = firebase
     .firestore()
-    .collection("CommentsApp")
+    .collection(Store.getState().CollectionName)
     .doc(JSON.stringify(new Date()));
   DocumentRef.set({
     Creation,
@@ -31,34 +32,34 @@ const AddComment = (firebase, CommentContent, userInfo) => {
     Replies: [],
   })
     .then(() => {
-      success("Document successfully added!", 5);
+      success("¡Comentario agregado!", 5);
     })
     .catch((error) => {
-      Error("Error adding document", 3);
+      Error("Error agregando comentario", 3);
     });
 };
 
 const DeleteComment = (firebase, DocId) => {
-  let DocumentRef = firebase.firestore().collection("CommentsApp").doc(DocId);
+  let DocumentRef = firebase.firestore().collection(Store.getState().CollectionName).doc(DocId);
   DocumentRef.delete()
     .then(() => {
-      success("Document successfully deleted!", 5);
+      success("Se ha eliminado el comentario", 5);
     })
     .catch((error) => {
-      Error("Error removing document", 3);
+      Error("Error eliminando el comentario", 3);
     });
 };
 
 const UpdateComment = (firebase, DocId, NewComment) => {
-  let DocumentRef = firebase.firestore().collection("CommentsApp").doc(DocId);
+  let DocumentRef = firebase.firestore().collection(Store.getState().CollectionName).doc(DocId);
   DocumentRef.update({
     CommentContent: NewComment,
   })
     .then(() => {
-      success("Document successfully Edit!", 5);
+      success("Se ha actualizado el comentario", 5);
     })
     .catch((error) => {
-      Error("Error edit document", 3);
+      Error("Error al editar comentario", 3);
     });
 };
 
@@ -75,7 +76,7 @@ const AddReply = (
   const Creation = `A las ${CreationDate.getHours()}:${CreationDate.getMinutes()}, el dia ${CreationDate.getDate()} de ${
     Month[CreationDate.getMonth()]
   } del ${CreationDate.getFullYear()}`;
-  let DocumentRef = firebase.firestore().collection("CommentsApp").doc(DocId);
+  let DocumentRef = firebase.firestore().collection(Store.getState().CollectionName).doc(DocId);
   DocumentRef.update({
     Replies: [
       ...ReplyArray,
@@ -94,26 +95,26 @@ const AddReply = (
     ],
   })
     .then(() => {
-      success("Reply successfully Added!", 5);
+      success("¡Nueva respuesta agregada!", 5);
     })
     .catch((error) => {
-      Error("Error Adding Reply", 3);
+      Error("Error agregando respuesta", 3);
     });
 };
 const DeleteReply = (firebase, DocId, ReplyArray, ReplyId) => {
-  let DocumentRef = firebase.firestore().collection("CommentsApp").doc(DocId);
+  let DocumentRef = firebase.firestore().collection(Store.getState().CollectionName).doc(DocId);
   DocumentRef.update({
     Replies: ReplyArray.filter((reply) => reply.id !== ReplyId),
   })
     .then(() => {
-      success("Reply successfully Added!", 5);
+      success("Se ha eliminado el comentario", 5);
     })
     .catch((error) => {
-      Error("Error Adding Reply", 3);
+      Error("Error eliminando el comentario", 3);
     });
 };
 const UpdateReply = (firebase, DocId, ReplyArray, ReplyId, ReplyUpdate) => {
-  let DocumentRef = firebase.firestore().collection("CommentsApp").doc(DocId);
+  let DocumentRef = firebase.firestore().collection(Store.getState().CollectionName).doc(DocId);
   DocumentRef.update({
     Replies: ReplyArray.map((item) => {
       if (item.id === ReplyId) {
@@ -123,10 +124,10 @@ const UpdateReply = (firebase, DocId, ReplyArray, ReplyId, ReplyUpdate) => {
     }),
   })
     .then(() => {
-      success("Reply successfully Added!", 5);
+      success("Se ha actualizado el comentario", 5);
     })
     .catch((error) => {
-      Error("Error Adding Reply", 3);
+      Error("Error al editar comentario", 3);
     });
 };
 

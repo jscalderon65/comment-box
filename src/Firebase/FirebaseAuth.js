@@ -1,8 +1,7 @@
-import { firebase } from "./FirebaseConfig";
 import { message as Message } from "antd";
 import "antd/dist/antd.css";
 const { success, error } = Message;
-const googleAuth = () => {
+const googleAuth = (firebase) => {
   let provider_Google = new firebase.auth.GoogleAuthProvider();
   firebase
     .auth()
@@ -15,7 +14,7 @@ const googleAuth = () => {
     });
 };
 
-const logout = () => {
+const logout = (firebase) => {
   firebase
     .auth()
     .signOut()
