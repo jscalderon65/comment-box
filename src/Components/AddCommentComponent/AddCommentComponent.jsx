@@ -1,4 +1,4 @@
-import {memo} from "react";
+import { memo } from "react";
 import { useForm } from "my-customhook-collection";
 import { AddComment } from "../../Firebase/FirestoreFunctions";
 import { message, Input, Button, Divider } from "antd";
@@ -28,8 +28,10 @@ const AddCommentComponent = memo(({ FirebaseApp, UserInfo }) => {
   };
   return (
     <form
+
       onSubmit={onSubmitHandle}
       style={{
+        background: "white", 
         border: "ridge",
         marginTop: "5px",
         padding: "10px",

@@ -1,4 +1,5 @@
 import React from "react";
+import GoogleButton from 'react-google-button'
 import { useFirebaseUser } from "my-customhook-collection";
 import { Card, Button, Image } from "antd";
 import { googleAuth, logout } from "../../Firebase/FirebaseAuth";
@@ -25,7 +26,7 @@ const Login = ({ firebase }) => {
           />
         </Card>
       ) : (
-        <Button onClick={()=>googleAuth(firebase)}>Ingresar</Button>
+        <GoogleButton onClick={()=>googleAuth(firebase)}/>
       )}
     </div>
   );

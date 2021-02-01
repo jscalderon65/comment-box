@@ -16,7 +16,13 @@ import {
   UpdateComment,
   AddReply,
 } from "../../Firebase/FirestoreFunctions";
-import { DeleteFilled, EditFilled } from "@ant-design/icons";
+import {
+  DeleteFilled,
+  EditFilled,
+  CloseCircleOutlined,
+  SaveOutlined,
+  SendOutlined,
+} from "@ant-design/icons";
 const { Title } = Typography;
 const { info } = message;
 const { Panel } = Collapse;
@@ -111,7 +117,9 @@ const CommentComponent = ({
 
   return (
     <Comment
+      className="animate__animated animate__fadeIn"
       style={{
+        background: "white",
         border: "ridge",
         marginTop: "5px",
         padding: "10px",
@@ -131,12 +139,18 @@ const CommentComponent = ({
                   value={EditInputValue}
                   onChange={HandleInputChange}
                 />
-                <Button onClick={SwitchEditHandler} danger>
+                <Button
+                  icon={<CloseCircleOutlined />}
+                  onClick={SwitchEditHandler}
+                  danger
+                >
                   Cancelar
                 </Button>
                 {EditInputValue !== CommentContent
                   ? EditInputValue && (
-                      <Button onClick={UpdateHandler}>Guardar cambios</Button>
+                      <Button icon={<SaveOutlined />} onClick={UpdateHandler}>
+                        Guardar cambios
+                      </Button>
                     )
                   : ""}
               </>
@@ -160,10 +174,18 @@ const CommentComponent = ({
             name={"ReplyInputValue"}
             value={ReplyInputValue}
           />
-          <Button onClick={SwitchReplyHandler} danger>
+          <Button
+            icon={<CloseCircleOutlined />}
+            onClick={SwitchReplyHandler}
+            danger
+          >
             Cancelar
           </Button>
-          {ReplyInputValue && <Button onClick={ReplyHandler}>Responder</Button>}
+          {ReplyInputValue && (
+            <Button icon={<SendOutlined />} onClick={ReplyHandler}>
+              Responder
+            </Button>
+          )}
         </>
       )}
       {/* {JSON.stringify(Replies,null,4)} */}

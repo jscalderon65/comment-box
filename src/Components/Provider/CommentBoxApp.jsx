@@ -1,8 +1,7 @@
 import React from "react";
-import { Login } from "../index";
 import { Provider } from "react-redux";
 import Store from "../../Redux/Store";
-import { CommentBoxContainer } from "../index.js";
+import {Login , CommentBoxContainer } from "../index.js";
 import "antd/dist/antd.css";
 const CommentBoxApp = ({ CollectionName, firebase }) => {
   return (

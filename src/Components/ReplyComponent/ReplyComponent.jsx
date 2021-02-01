@@ -14,7 +14,13 @@ import {
   UpdateReply,
   AddReply,
 } from "../../Firebase/FirestoreFunctions";
-import { DeleteFilled, EditFilled } from "@ant-design/icons";
+import {
+  DeleteFilled,
+  EditFilled,
+  CloseCircleOutlined,
+  SaveOutlined,
+  SendOutlined,
+} from "@ant-design/icons";
 const { Title } = Typography;
 const ReplyComponent = ({
   id: ReplyId,
@@ -103,7 +109,9 @@ const ReplyComponent = ({
 
   return (
     <Comment
+      className="animate__animated animate__fadeIn"
       style={{
+        background: "white",
         borderLeft: "ridge 10px",
         marginTop: "5px",
         padding: "10px",
@@ -123,12 +131,16 @@ const ReplyComponent = ({
                 value={EditInputValue}
                 onChange={HandleInputChange}
               />
-              <Button onClick={SwitchEditHandler} danger>
+              <Button
+                icon={<CloseCircleOutlined />}
+                onClick={SwitchEditHandler}
+                danger
+              >
                 Cancelar
               </Button>
               {EditInputValue !== Reply
                 ? EditInputValue && (
-                    <Button onClick={EditHandler}>Guardar cambios</Button>
+                    <Button icon={<SaveOutlined />} onClick={EditHandler}>Guardar cambios</Button>
                   )
                 : ""}
             </>
@@ -154,10 +166,14 @@ const ReplyComponent = ({
             name={"ReplyInputValue"}
             value={ReplyInputValue}
           />
-          <Button onClick={SwitchReplyHandler} danger>
+          <Button
+            icon={<CloseCircleOutlined />}
+            onClick={SwitchReplyHandler}
+            danger
+          >
             Cancelar
           </Button>
-          {ReplyInputValue && <Button onClick={ReplyHandler}>Responder</Button>}
+          {ReplyInputValue && <Button icon={<SendOutlined />} onClick={ReplyHandler}>Responder</Button>}
         </>
       )}
       <div ref={ReplyScrollHandler} />

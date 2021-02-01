@@ -1,28 +1,28 @@
 import React from "react";
-import Store from '../../Redux/Store';
-import {GetCollection } from '../../Redux/ActionCreator'
+import Store from "../../Redux/Store";
+import { GetCollection } from "../../Redux/ActionCreator";
 import { connect } from "react-redux";
 import {
   useFirebaseUser,
   useOnSnapshotCollection,
 } from "my-customhook-collection";
-import { googleAuth, logout } from "../../Firebase/FirebaseAuth";
 import {
   CommentComponent,
   AddCommentComponent,
   ReplyComponent,
 } from "../index";
 import { BackTop } from "antd";
-const CommentBoxContainer = ({ CollectionName,GetCollection,firebase  }) => {
+const CommentBoxContainer = ({ CollectionName, GetCollection, firebase }) => {
   GetCollection(CollectionName);
   const db = firebase.firestore();
   const refColl = db.collection(Store.getState().CollectionName);
   const [comments] = useOnSnapshotCollection(refColl);
   const [UserInfo] = useFirebaseUser(firebase);
+  
   return (
     <div
       style={{
-        padding: "20px",
+        padding: "20px"
       }}
     >
       {UserInfo && (
@@ -56,9 +56,9 @@ const mapStateToProps = (state) => ({
   Collection: state.CollectionName,
 });
 const mapDispatchToProps = (dispatch) => ({
-  GetCollection(name){
-    dispatch(GetCollection(name))
-  }
+  GetCollection(name) {
+    dispatch(GetCollection(name));
+  },
 });
 export default connect(
   mapStateToProps,
