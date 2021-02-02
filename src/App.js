@@ -5,7 +5,7 @@ import './App.css'
 const App = () => {
   return (
     <>
-      <CommentBoxApp CollectionName={"Example"} firebase={firebase} />
+      <CommentBoxApp CollectionName={"npm"} firebase={firebase} />
     </>
   );
 };

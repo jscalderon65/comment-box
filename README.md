@@ -1,6 +1,20 @@
 # my-comment-box-app
 
-_my-comment-box-app es una librería de React que permite agregar una sección de comentarios en cualquier proyecto de react que este implementando firebase, los cambios y comentarios nuevos se verán en tiempo real en el componente, también es necesario mencionar que se debe implementar la autenticación de firebase en el proyecto, ya que my-comment-box-app solo permite comentar a usuarios logueados._
+## ¿Qué es?
+_my-comment-box-app es una librería de React que permite agregar una sección de comentarios en cualquier proyecto de react que este implementando firebase, los cambios y comentarios nuevos se verán en tiempo real en el componente._
+
+## Funcionamiento
+_Es necesario mencionar que se debe implementar la autenticación de firebase en el proyecto, ya que my-comment-box-app solo permite comentar a usuarios logueados._
+
+## Estilos
+_Los estilos de la aplicación fueron realizados unicamente con Ant Design y animate css, para que funcionen las animaciones de la librería es necesario agregar el cdn de animate css, este último paso es opcional y no compromete el funcionamiento de la librería._
+
+```html
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+/>
+```
 
 ## Instalación
 
@@ -9,7 +23,13 @@ npm install  my-comment-box-app
 ```
 
 ## Modo de uso
-_my-comment-box-app posee dos componentes, el primero 'CommentBoxApp' el cual es aquel que contiene toda la sección de comentarios, recibe dos props, 'CollectionName' string que representa a la colección a la que irán los comentarios en tu proyecto de firebase y la segunda 'firebase' recibe el objeto que inicializa y hace la conexión con el proyecto, el otro componente 'Login' es una pequeña implementación de un login con firebase y Google para probar la sección de comentarios, su uso es opcional._
+_my-comment-box-app posee dos componentes:_
+
+## CommentBoxApp 
+_contenedor de toda la sección de comentarios, recibe dos props, 'CollectionName' string que representa a la colección a la que irán los comentarios en tu proyecto de firebase y la segunda 'firebase' recibe el objeto que inicializa y hace la conexión con el proyecto._
+
+## Login 
+_es una pequeña implementación de un login con firebase y Google para probar la sección de comentarios, su uso es opcional._
 
 ```js
 /*Nombre del componente FirebaseConfig*/
@@ -46,6 +66,8 @@ const App = () => {
 }
 export default App;
 ```
+
+## [Ejemplo de implementación](https://6018b272e1e6bf5e79fe3742--commentboxtest.netlify.app/)
 
 
 ## License
