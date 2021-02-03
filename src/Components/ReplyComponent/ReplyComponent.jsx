@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { useForm } from "my-customhook-collection";
+import { useForm, useMediaQuery} from "my-customhook-collection";
 import {
   Comment,
   Tooltip,
@@ -34,6 +34,7 @@ const ReplyComponent = ({
   FirebaseApp,
   UserOnlineInfo,
 }) => {
+  const mediaQuery = useMediaQuery("(max-width: 460px)");
   const ReplyScrollHandler = useRef();
   const EditScrollHandler = useRef();
   const { displayName, photoURL, uid } = UserInfo;
@@ -153,8 +154,8 @@ const ReplyComponent = ({
         </>
       }
       datetime={
-        <Tooltip title={Creation}>
-          <span>{Creation}</span>
+        <Tooltip  title={Creation}>
+          <span>{mediaQuery?"Fecha de publicación":Creation}</span>
         </Tooltip>
       }
     >

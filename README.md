@@ -7,7 +7,7 @@ _my-comment-box-app es una librería de React que permite agregar una sección d
 _Es necesario mencionar que se debe implementar la autenticación de firebase en el proyecto, ya que my-comment-box-app solo permite comentar a usuarios logueados._
 
 ## Estilos
-_Los estilos de la aplicación fueron realizados unicamente con Ant Design y animate css, para que funcionen las animaciones de la librería es necesario agregar el cdn de animate css, este último paso es opcional y no compromete el funcionamiento de la librería._
+_La librería se construyo usando solo los componentes de Ant Design y las animaciones de animate css, para que estás últimas funcionen es necesario agregar el cdn de animate css, este paso es opcional y no compromete el funcionamiento de la librería._
 
 ```html
 <link
@@ -66,8 +66,7 @@ const App = () => {
 }
 export default App;
 ```
-
-## [Ejemplo de implementación](https://6018b272e1e6bf5e79fe3742--commentboxtest.netlify.app/)
+## [Ejemplo de implementación 👈](https://commentboxtest.netlify.app/)
 
 
 ## License
