@@ -177,7 +177,7 @@ const ReplyComponent = ({
           {ReplyInputValue && <Button icon={<SendOutlined />} onClick={ReplyHandler}>Responder</Button>}
         </>
       )}
-      <div ref={ReplyScrollHandler} />
+      <div ref={ReplyScrollHandler} style={{scrollMarginTop:"50px"}} />
     </Comment>
   );
 };

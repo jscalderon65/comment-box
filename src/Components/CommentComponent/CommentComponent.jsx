@@ -166,7 +166,7 @@ const CommentComponent = ({
         </Tooltip>
       }
     >
-      <div ref={ReplyScrollHandler} />
+      <div ref={ReplyScrollHandler} style={{scrollMarginTop:"50px"}}/>
       {SwitchReply && (
         <>
           <Input.TextArea

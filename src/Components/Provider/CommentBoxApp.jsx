@@ -1,5 +1,5 @@
 import React from "react";
-import { CommentBoxContainer } from "../index";
+import { CommentBoxContainer,Login } from "../index";
 import { Provider } from "react-redux";
 import Store from "../../Redux/Store";
 import { PageHeader } from "antd";
@@ -20,7 +20,8 @@ const CommentBoxApp = ({ CollectionName, firebase }) => {
             icon={<GithubFilled style={{ fontSize: "40px" }} />}
           />
         }
-      ></PageHeader>
+      />
+     < Login firebase={firebase} />
       <Provider store={Store}>
         <CommentBoxContainer
           CollectionName={CollectionName}
